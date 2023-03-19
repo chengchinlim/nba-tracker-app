@@ -69,5 +69,5 @@ app.post('/stats', async (req: Request, res: Response) => {
 })
 
 app.listen(configs.port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${configs.port}`)
+  console.log(`⚡️[server]: Server is running at port ${configs.port}`)
 })
