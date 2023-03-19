@@ -3,5 +3,6 @@
 tmp/
 node_modules/
 data/
-lib/
+lib/*.ts
+lib/*.d.ts
 .idea/
