@@ -1,27 +1,46 @@
 import fs from 'fs'
 import { chain } from 'stream-chain'
-import * as zlib from 'zlib'
 import { parser } from 'stream-json'
-import { ignore } from 'stream-json/filters/Ignore'
-import { streamValues } from 'stream-json/streamers/StreamValues'
 import { pick } from 'stream-json/filters/Pick'
+import { streamArray } from 'stream-json/streamers/StreamArray'
+import { Player } from './model'
+import { connectMongoDb } from '../main'
+connectMongoDb()
+interface TPlayer {
+  'firstName': string
+  'lastName': string
+  'personId': string
+  'isActive': boolean
+}
+
 /* Only use locally
-*
+*  Init players data from a JSON file to MongoDB database
 * */
-const readDataFromLocalStorage = (): void => {
+(function (): void {
   const filePath = `${process.cwd()}/data/external/players.json`
   console.log(`Reading data from ${filePath}`)
   const pipeline = chain([
     fs.createReadStream(filePath),
-    // zlib.createGunzip(),
     parser(),
     pick({ filter: 'league.standard' }),
-    // ignore({ filter: /\b_meta\b/i }),
-    streamValues(),
-    data => data
+    streamArray()
   ])
-  pipeline.on('data', (data: unknown) => { console.log(data) })
+  pipeline.on('data', async (data: { value: TPlayer }) => {
+    pipeline.pause()
+    const player = data.value
+    if (player.isActive) {
+      const newPlayer = new Player({
+        firstName: player.firstName,
+        lastName: player.lastName,
+        personId: player.personId,
+        isActive: player.isActive,
+        teamId: -1,
+        playerId: -1
+      })
+      await newPlayer.save()
+      console.log(`Saving new player: ${JSON.stringify(newPlayer)}`)
+    }
+    pipeline.resume()
+  })
   pipeline.on('end', () => { console.log('end') })
-}
-
-readDataFromLocalStorage()
+}())
