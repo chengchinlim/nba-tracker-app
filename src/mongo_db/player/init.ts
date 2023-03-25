@@ -29,6 +29,10 @@ interface TPlayer {
     pipeline.pause()
     const player = data.value
     if (player.isActive) {
+      /*
+      * TeamId and playerId will be set
+      * using RapidApi data
+      * */
       const newPlayer = new Player({
         firstName: player.firstName,
         lastName: player.lastName,
