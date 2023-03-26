@@ -25,26 +25,28 @@ interface TPlayer {
     pick({ filter: 'league.standard' }),
     streamArray()
   ])
-  pipeline.on('data', async (data: { value: TPlayer }) => {
-    pipeline.pause()
-    const player = data.value
-    if (player.isActive) {
+  pipeline.on('data', (data: { value: TPlayer }) => {
+    void (async () => {
+      pipeline.pause()
+      const player = data.value
+      if (player.isActive) {
       /*
       * TeamId and playerId will be set
       * using RapidApi data
       * */
-      const newPlayer = new Player({
-        firstName: player.firstName,
-        lastName: player.lastName,
-        personId: player.personId,
-        isActive: player.isActive,
-        teamId: -1,
-        playerId: -1
-      })
-      await newPlayer.save()
-      console.log(`Saving new player: ${JSON.stringify(newPlayer)}`)
-    }
-    pipeline.resume()
+        const newPlayer = new Player({
+          firstName: player.firstName,
+          lastName: player.lastName,
+          personId: player.personId,
+          isActive: player.isActive,
+          teamId: -1,
+          playerId: -1
+        })
+        await newPlayer.save()
+        console.log(`Saving new player: ${JSON.stringify(newPlayer)}`)
+      }
+      pipeline.resume()
+    })
   })
   pipeline.on('end', () => { console.log('end') })
 }())
