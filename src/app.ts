@@ -2,12 +2,11 @@ import { configs } from './config'
 import express, { type Request, type Response } from 'express'
 import cors from 'cors'
 import { connectMongoDb } from './mongo_db/main'
-import { Player } from './mongo_db/player'
+import { Player } from './mongo_db/player/model'
 import { getPlayerStatsData } from './third_party/main'
-import { writeDataToLocalStorage } from './utils/main'
-import { writeToS3Bucket } from './aws/main'
 import swaggerUi from 'swagger-ui-express'
 import fs from 'fs'
+import { searchPlayerByName } from './mongo_db/player/service'
 
 connectMongoDb()
 
@@ -38,11 +37,10 @@ app.post('/player', (req: Request, res: Response) => {
   })
 })
 
-app.get('/player', (req: Request, res: Response) => {
+app.get('/search', (req: Request, res: Response) => {
   void (async () => {
-    const players = await Player.findOne({
-      teamId: 1
-    })
+    const name = req.query.name as string
+    const players = await searchPlayerByName(name)
     res.status(200).send(players)
   })()
 })
