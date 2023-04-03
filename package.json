@@ -8,7 +8,7 @@
     "start": "nodemon src/app.ts",
     "lint": "eslint",
     "swagger": "npm run build && node lib/swagger.js",
-    "deploy": "gcloud run deploy nba-tracker-app --source ."
+    "deploy": "gcloud run deploy nba-tracker-app --source . && firebase deploy --only hosting"
   },
   "keywords": [],
   "author": "",
