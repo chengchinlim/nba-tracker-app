@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "nodemon src/app.ts",
     "lint": "eslint",
-    "swagger": "npm run build && node lib/swagger.js"
+    "swagger": "npm run build && node lib/swagger.js",
+    "deploy": "gcloud run deploy nba-tracker-app --source ."
   },
   "keywords": [],
   "author": "",
@@ -20,8 +21,7 @@
     "express": "^4.18.2",
     "mongoose": "^7.0.1",
     "swagger-autogen": "^2.23.1",
-    "swagger-ui-express": "^4.6.2",
-    "typescript": "^4.9.5"
+    "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -38,6 +38,7 @@
     "nodemon": "^2.0.21",
     "stream-chain": "^2.2.5",
     "stream-json": "^1.7.5",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
   }
 }
