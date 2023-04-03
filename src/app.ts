@@ -73,6 +73,9 @@ app.post('/stats', (req: Request, res: Response) => {
     }
   })
 })
+app.get('*', (req: Request, res: Response) => {
+  res.status(200).send('Express + TypeScript Server')
+})
 
 app.get('*', (req: Request, res: Response) => {
   res.status(200).send('Express + TypeScript Server is running')
