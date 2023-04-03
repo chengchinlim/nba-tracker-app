@@ -12,4 +12,6 @@ RUN npm ci --only=production
 # Bundle app source
 COPY . .
 
+RUN tsc
+
 CMD [ "node", "lib/app.js" ]
