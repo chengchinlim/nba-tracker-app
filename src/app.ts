@@ -20,10 +20,6 @@ app.use('/doc', swaggerUi.serve,
   swaggerUi.setup(JSON.parse(fs.readFileSync(`${process.cwd()}/lib/swagger_output.json`, 'utf-8')))
 )
 
-app.get('/health', (req: Request, res: Response) => {
-  res.status(200).send('Express + TypeScript Server')
-})
-
 app.post('/player', (req: Request, res: Response) => {
   void (async () => {
     const player = new Player({
@@ -76,6 +72,9 @@ app.post('/stats', (req: Request, res: Response) => {
       res.status(500).send(err)
     }
   })
+})
+app.get('*', (req: Request, res: Response) => {
+  res.status(200).send('Express + TypeScript Server')
 })
 
 app.listen(configs.port, () => {

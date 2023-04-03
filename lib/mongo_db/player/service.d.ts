@@ -1,1 +1,2 @@
-export declare const searchPlayerByName: (name: string) => Promise<unknown>;
+import { type TPlayer } from './type';
+export declare const searchPlayerByName: (name: string) => Promise<TPlayer[]>;
