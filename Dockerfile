@@ -13,4 +13,8 @@ COPY . .
 
 RUN tsc
 
+COPY . .
+
+RUN node lib/swagger.js
+
 CMD [ "node", "lib/app.js" ]
