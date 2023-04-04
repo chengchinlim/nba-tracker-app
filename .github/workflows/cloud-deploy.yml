@@ -1,4 +1,4 @@
-name: Docker
+name: Deploy Docker Image and Firebase Hosting
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 jobs:
 
   deploy:
-    name: Push Docker image to Google Cloud Run
+    name: Deploy Docker image to Google Cloud Run
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
@@ -35,11 +35,13 @@ jobs:
       - name: Deploy Docker image
         run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed
 
-  build_and_deploy:
+  firebase_deploy:
+    name: Deploy app to firebase hosting to update custom domain
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: FirebaseExtended/action-hosting-deploy@v0
+      - run: npm ci && && npm i -g typescript && tsc
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NBA_TRACKER_APP }}'
