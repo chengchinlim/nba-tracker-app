@@ -7,7 +7,7 @@ COPY package*.json ./
 
 #RUN npm install
 # If you are building your code for production
-RUN npm ci --only=production && npm i -g typescript
+RUN npm ci && npm i -g typescript
 # Bundle app source
 COPY . .
 
