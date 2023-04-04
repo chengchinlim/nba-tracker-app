@@ -51,3 +51,5 @@ workflows:
     jobs:
       - build_test
       - build_push_image_cloud_run_managed:
+          requires:
+            - build_test
