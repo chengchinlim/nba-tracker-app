@@ -1,4 +1,4 @@
-name: Docker Firebase Hosting
+name: Deploy Firebase Hosting
 
 on:
   push:
