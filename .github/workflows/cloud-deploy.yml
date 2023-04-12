@@ -1,12 +1,14 @@
 name: Deploy Docker Image and Firebase Hosting
 
 on:
-  push:
-    branches: [ github-actions ]
+  pull_request:
+    types:
+      - closed
+    branches: [ main ]
 
 jobs:
-
   cloud_run_deploy:
+    if: github.event.pull_request.merged
     name: Deploy Docker image to Google Cloud Run
     runs-on: ubuntu-latest
     env:
@@ -36,6 +38,7 @@ jobs:
         run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed
 
   firebase_deploy:
+    if: github.event.pull_request.merged
     name: Deploy app to firebase hosting to update custom domain
     runs-on: ubuntu-latest
     steps:
