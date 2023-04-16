@@ -8,7 +8,7 @@
     "start": "nodemon src/app.ts",
     "lint": "eslint",
     "swagger": "npm run build && node lib/swagger.js",
-    "deploy": "gcloud run deploy nba-tracker-app --source . && firebase deploy --only hosting"
+    "test-cron-job": "node lib/cron_jobs/test.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "@aws-sdk/client-s3": "^3.292.0",
     "axios": "^1.3.4",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^7.0.1",
