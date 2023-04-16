@@ -1,0 +1,47 @@
+name: Deploy Docker Image and Firebase Hosting
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches: [ main ]
+
+jobs:
+  cloud_run_deploy:
+    if: github.event.pull_request.merged
+    name: Deploy Docker image to Google Cloud Run
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+    steps:
+      - name: GCP Login
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_EMAIL }}
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build . -t $IMAGE_NAME
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME
+      - name: Deploy Docker image
+        run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed
+
+  firebase_deploy:
+    if: github.event.pull_request.merged
+    name: Deploy app to firebase hosting to update custom domain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+#      - run: 'npm ci && npm i -g typescript && npm run build'
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NBA_TRACKER_APP }}'
+          channelId: live
+          projectId: nba-tracker-app
+    needs: cloud_run_deploy

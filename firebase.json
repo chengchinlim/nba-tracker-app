@@ -1,11 +1,13 @@
 {
   "hosting": {
-    "rewrites": [{
-      "source": "**",
-      "run": {
-        "serviceId": "nba-tracker-app",
-        "region": "us-central1"
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "nba-tracker-app",
+          "region": "us-central1"
+        }
       }
-    }]
+    ]
   }
 }
