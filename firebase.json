@@ -2,7 +2,7 @@
   "hosting": {
     "rewrites": [
       {
-        "source": "/cloudrun",
+        "source": "**",
         "run": {
           "serviceId": "nba-tracker-app",
           "region": "us-central1"
