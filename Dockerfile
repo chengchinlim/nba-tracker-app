@@ -7,11 +7,14 @@ COPY package*.json ./
 
 #RUN npm install
 # If you are building your code for production
-RUN npm ci --only=production
-
+RUN npm ci && npm i -g typescript
 # Bundle app source
 COPY . .
 
 RUN tsc
+
+COPY . .
+
+RUN node lib/swagger.js
 
 CMD [ "node", "lib/app.js" ]

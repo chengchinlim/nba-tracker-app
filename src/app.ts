@@ -77,6 +77,10 @@ app.get('*', (req: Request, res: Response) => {
   res.status(200).send('Express + TypeScript Server')
 })
 
+app.get('*', (req: Request, res: Response) => {
+  res.status(200).send('Express + TypeScript Server is running')
+})
+
 app.listen(configs.port, () => {
   console.log(`⚡️Server is running at port ${configs.port}`)
 })
