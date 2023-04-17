@@ -7,8 +7,15 @@ import { getPlayerStatsData } from './third_party/main'
 import swaggerUi from 'swagger-ui-express'
 import fs from 'fs'
 import { searchPlayerByName } from './mongo_db/player/service'
+import { testCronJob } from './cron_jobs/test'
 
 connectMongoDb()
+
+if (process.env.TEST_CRON_JOB != null &&
+    parseInt(process.env.TEST_CRON_JOB) === 1
+) {
+  testCronJob()
+}
 
 const app = express()
 app.use(
@@ -72,9 +79,6 @@ app.post('/stats', (req: Request, res: Response) => {
       res.status(500).send(err)
     }
   })
-})
-app.get('*', (req: Request, res: Response) => {
-  res.status(200).send('Express + TypeScript Server')
 })
 
 app.get('*', (req: Request, res: Response) => {
