@@ -15,13 +15,6 @@ const TeamSchema = new Schema({
   * */
   latestGameId: {
     type: Number
-  },
-  /*
-  * If now - lastUpdated > 24 hours
-  * let the update stats cron job run
-  * */
-  lastUpdated: {
-    type: Date
   }
 })
 

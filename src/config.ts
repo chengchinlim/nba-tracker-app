@@ -10,6 +10,13 @@ export const configs = {
     username: process.env.MONGODB_USERNAME as string,
     password: process.env.MONGODB_PASSWORD as string
   },
+  redis: {
+    url: process.env.REDIS_URL as string,
+    host: process.env.REDIS_SERVER_HOST as string,
+    port: parseInt(process.env.REDIS_SERVER_PORT as string),
+    username: process.env.REDIS_SERVER_USERNAME as string,
+    password: process.env.REDIS_SERVER_PASSWORD as string
+  },
   aws: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
