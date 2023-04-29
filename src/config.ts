@@ -11,7 +11,7 @@ export const configs = {
     password: process.env.MONGODB_PASSWORD as string
   },
   redis: {
-    url: process.env.REDIS_URL as string,
+    url: process.env.REDIS_SERVER_URL as string,
     host: process.env.REDIS_SERVER_HOST as string,
     port: parseInt(process.env.REDIS_SERVER_PORT as string),
     username: process.env.REDIS_SERVER_USERNAME as string,
