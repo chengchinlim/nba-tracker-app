@@ -6,7 +6,6 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/app.ts",
-    "init-repeatable-jobs": "node lib/repeatable_jobs/init.js",
     "lint": "eslint",
     "swagger": "npm run build && node lib/swagger.js"
   },

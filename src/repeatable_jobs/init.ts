@@ -65,7 +65,3 @@ export const removeRepeatableJobs = async (): Promise<string[]> => {
   }
   return results
 }
-
-void (async () => {
-  console.log(await getRepeatableJobs())
-})()

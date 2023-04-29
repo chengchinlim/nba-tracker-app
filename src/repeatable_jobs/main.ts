@@ -1,6 +1,5 @@
 import { type Job, Queue, Worker } from 'bullmq'
 import { redis } from './redis'
-import dayjs from 'dayjs'
 
 interface UpdateStatsJobData {
   teamId: number
