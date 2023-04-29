@@ -1,7 +1,7 @@
 import swaggerAutogen from 'swagger-autogen'
 
 const outputFile = '../lib/swagger_output.json'
-const endpointsFiles = ['../lib/app.js']
+const endpointsFiles = ['../lib/app.js', '../lib/controllers/*.js']
 
 const doc = {
   servers: [
