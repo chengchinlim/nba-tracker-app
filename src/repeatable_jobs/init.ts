@@ -1,5 +1,5 @@
 import { CronJobQueue } from './main'
-import { getTeamId } from './service'
+import { getTeamId } from '../services/main'
 
 const getCronSchedule = (index: number): string => {
   let min = 0
@@ -18,7 +18,7 @@ const getCronSchedule = (index: number): string => {
     }
     tempIndex--
   }
-  return `${min} ${hour} * * *`
+  return `${min} ${hour} * * * *`
 }
 
 const queue = new CronJobQueue(
