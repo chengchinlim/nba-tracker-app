@@ -42,7 +42,8 @@ export class CronJobQueue {
   addJob = async (data: UpdateStatsJobData): Promise<string | undefined> => {
     const job = await this.queue.add(`update_stats_team_${data.teamId}`, data, {
       repeat: {
-        pattern: data.cronSchedule
+        pattern: data.cronSchedule,
+        limit: 1
       },
       removeOnComplete: true,
       removeOnFail: true

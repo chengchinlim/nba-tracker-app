@@ -10,7 +10,7 @@ export const getTeamId = async (teamId: number): Promise<number | null> => {
   return team !== null ? team.teamId : null
 }
 
-const getSeason = (): number => {
+export const getSeason = (): number => {
   const now = dayjs()
   const currentYear = now.year()
   const followingYear = now.add(1, 'year').year()
