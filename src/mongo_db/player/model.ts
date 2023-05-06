@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { type IPlayer } from './type'
 const Schema = mongoose.Schema
 
 const PlayerSchema = new Schema({
@@ -24,4 +25,4 @@ const PlayerSchema = new Schema({
   }
 })
 
-export const Player = mongoose.model('player', PlayerSchema)
+export const Player = mongoose.model<IPlayer>('player', PlayerSchema)

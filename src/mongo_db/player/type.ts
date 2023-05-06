@@ -1,6 +1,6 @@
 import { type Base } from '../base'
 
-export interface TPlayer extends Base {
+export interface IPlayer extends Base {
   firstName: string
   lastName: string
   personId: number

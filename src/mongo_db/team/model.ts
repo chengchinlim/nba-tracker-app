@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import { type ITeam } from './type'
+
 const Schema = mongoose.Schema
 
 const TeamSchema = new Schema({
@@ -18,4 +20,4 @@ const TeamSchema = new Schema({
   }
 })
 
-export const Team = mongoose.model('team', TeamSchema)
+export const Team = mongoose.model<ITeam>('team', TeamSchema)

@@ -1,5 +1,5 @@
 import { CronJobQueue } from './main'
-import { getTeamId } from '../services/main'
+import { getTeam } from '../mongo_db/team/service'
 
 export interface THourMin {
   min: number
@@ -50,15 +50,15 @@ export const createRepeatableJobs = async (utcStartTime?: THourMin): Promise<str
   // console.log(jobs)
   const results: string[] = []
   for (let i = 0; i < 50; i++) {
-    const teamId = await getTeamId(i)
-    if (teamId !== null) {
+    const team = await getTeam(i)
+    if (team !== null) {
       const cronSchedule = getCronSchedule(i, utcStartTime)
       const jobId = await queue.addJob({
-        teamId,
+        teamId: team.teamId,
         cronSchedule
       })
       if (jobId !== undefined) {
-        results.push(`JobId: ${jobId} , TeamId: ${teamId}, cronSchedule: ${cronSchedule}`)
+        results.push(`JobId: ${jobId} , TeamId: ${team.teamId}, cronSchedule: ${cronSchedule}`)
       }
     }
   }
@@ -73,10 +73,10 @@ export const getRepeatableJobs = async (): Promise<string[]> => {
 export const removeRepeatableJobs = async (utcStartTime?: THourMin): Promise<string[]> => {
   const results: string[] = []
   for (let i = 0; i < 50; i++) {
-    const teamId = await getTeamId(i)
-    if (teamId !== null) {
+    const team = await getTeam(i)
+    if (team !== null) {
       const cronSchedule = getCronSchedule(i, utcStartTime)
-      const jobName = `update_stats_team_${teamId}`
+      const jobName = `update_stats_team_${team.teamId}`
       const isRemoved = await queue.removeJob({
         jobName,
         cronSchedule
