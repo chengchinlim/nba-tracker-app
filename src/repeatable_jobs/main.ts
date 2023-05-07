@@ -27,7 +27,8 @@ export class CronJobQueue {
       connection: redis,
       defaultJobOptions: {
         attempts: 3,
-        removeOnComplete: true
+        removeOnComplete: true,
+        removeOnFail: true
       }
     })
   }
@@ -42,11 +43,8 @@ export class CronJobQueue {
   addJob = async (data: UpdateStatsJobData): Promise<string | undefined> => {
     const job = await this.queue.add(`update_stats_team_${data.teamId}`, data, {
       repeat: {
-        pattern: data.cronSchedule,
-        limit: 1
-      },
-      removeOnComplete: true,
-      removeOnFail: true
+        pattern: data.cronSchedule
+      }
     })
     return job.id
   }
