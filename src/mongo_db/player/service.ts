@@ -1,7 +1,7 @@
 import { Player } from './model'
-import { type TPlayer } from './type'
+import { type IPlayer } from './type'
 
-export const searchPlayerByName = async (name: string): Promise<TPlayer[]> => {
+export const searchPlayerByName = async (name: string): Promise<IPlayer[]> => {
   if (name.length < 2) {
     throw new Error('Player name must be at least 2 characters long')
   }
@@ -17,7 +17,7 @@ export const searchPlayerByName = async (name: string): Promise<TPlayer[]> => {
   return players
 }
 
-export const searchPlayerByPlayerId = async (playerId: number): Promise<TPlayer | null> => {
+export const searchPlayerByPlayerId = async (playerId: number): Promise<IPlayer | null> => {
   const player = await Player
     .findOne({ playerId })
     .lean()
@@ -25,7 +25,8 @@ export const searchPlayerByPlayerId = async (playerId: number): Promise<TPlayer 
   return player
 }
 
-export const savePlayer = async (player: TPlayer): Promise<TPlayer> => {
+export const savePlayer = async (player: IPlayer): Promise<string> => {
   const newPlayer = new Player(player)
-  return await newPlayer.save()
+  const savedPlayer = await newPlayer.save()
+  return savedPlayer._id.toString()
 }

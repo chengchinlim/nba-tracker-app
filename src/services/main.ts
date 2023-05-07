@@ -1,14 +1,4 @@
-import { Team } from '../mongo_db/team/model'
-import { connectMongoDb } from '../mongo_db/main'
 import dayjs from 'dayjs'
-connectMongoDb()
-
-export const getTeamId = async (teamId: number): Promise<number | null> => {
-  const team = await Team.findOne({
-    teamId
-  })
-  return team !== null ? team.teamId : null
-}
 
 export const getSeason = (): number => {
   const now = dayjs()

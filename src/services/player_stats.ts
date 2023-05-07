@@ -1,8 +1,8 @@
 import { type PlayerStatsPerGame } from '../third_party/types/player_stats_per_game'
 import { savePlayer, searchPlayerByPlayerId } from '../mongo_db/player/service'
-import { type TPlayer } from '../mongo_db/player/type'
 import { getPlayerStatsData } from '../third_party/main'
-import { getSeason, getTeamId } from './main'
+import { getSeason } from './main'
+import { getTeam } from '../mongo_db/team/service'
 
 const filterOutRepeatedPlayerStats = (
   playerStats: PlayerStatsPerGame[], latestGameId?: number
@@ -41,17 +41,17 @@ const filterOutRepeatedPlayerStats = (
 // }
 
 export const updateStats = async (teamId: number): Promise<boolean> => {
-  const correctTeamId = await getTeamId(teamId)
-  if (correctTeamId === null) {
+  const correctTeam = await getTeam(teamId)
+  if (correctTeam === null) {
     return false
   }
   const stats = await getPlayerStatsData({
     season: getSeason(),
-    team: correctTeamId
+    team: correctTeam.teamId
   })
   const playerIdToStatsMap = filterOutRepeatedPlayerStats(
     stats,
-    correctTeamId
+    correctTeam.latestGameId
   )
   // for (const [playerId, stats] of playerIdToStatsMap) {
   //
