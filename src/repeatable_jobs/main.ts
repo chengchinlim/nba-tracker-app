@@ -1,5 +1,6 @@
 import { type Job, Queue, Worker } from 'bullmq'
 import { redis } from './redis'
+import { updateStats } from '../services/player_stats'
 
 interface UpdateStatsJobData {
   teamId: number
@@ -13,6 +14,8 @@ export class CronJobQueue {
     this.worker = new Worker(
       queueName, async (job: Job<UpdateStatsJobData>) => {
         console.log(`Updating stats for ${job.data.teamId}`)
+        const isUpdated = await updateStats(job.data.teamId)
+        console.log(`Team ${job.data.teamId} updated ${isUpdated ? 'successfully' : 'failed'}`)
       }, {
         connection: redis,
         autorun: true

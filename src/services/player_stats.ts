@@ -44,6 +44,7 @@ const filterOutRepeatedPlayerStats = (
 export const updateStats = async (teamId: number): Promise<boolean> => {
   const correctTeam = await getTeam(teamId)
   if (correctTeam === null) {
+    console.log(`Team ${teamId} not found`)
     return false
   }
   const stats = await getPlayerStatsData({
