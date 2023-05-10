@@ -70,6 +70,6 @@ export const updateStats = async (teamId: number): Promise<boolean> => {
     ...stats.map(stat => stat.game.id)
   )
   await updateTeamLatestGameId({ teamId, latestGameId: newLatestGameId })
-  console.log(`New latest gameId: ${newLatestGameId}`)
+  console.log(`Updated new latest gameId: ${newLatestGameId} for team ${teamId}`)
   return true
 }
