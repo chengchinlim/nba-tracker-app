@@ -51,6 +51,7 @@ export const updateStats = async (teamId: number): Promise<boolean> => {
     season: getSeason(),
     team: correctTeam.teamId
   })
+  console.log(`Number of stats retrieved: ${stats.length}`)
   const playerIdToStatsMap = filterOutRepeatedPlayerStats(
     stats,
     correctTeam.latestGameId
